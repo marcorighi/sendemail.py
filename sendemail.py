@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 ## ip.py version 4
 
 # email's libraries
@@ -32,13 +34,13 @@ def sendemail(from_addr, to_addr_list, cc_addr_list,
     header += 'Subject: %s\n\n' % subject
     message = header + message # msgMIME.as_string()
 
-    txtout = 'login:'+login
-    txtout += 'password:' + password
-    txtout += 'server:' + server
-    txtout += 'port:' + port
-    txtout += ''
+    txtout = 'login:'+login+'\n'
+    txtout += 'password:' + password+'\n'
+    txtout += 'server:' + server+'\n'
+    txtout += 'port:' + port+'\n'
+    txtout += '\n'
     txtout += message
-    txtout += ''
+    txtout += '\n'
     # Create a secure SSL context
     context = ssl.create_default_context()
 
@@ -113,16 +115,22 @@ message_to_print = ""
 if args.outverbose:
     message_to_print = txt+"\n"
 
+date = str(datetime.datetime.now())
 if error>0:
-    date = str(datetime.datetime.now())
     if error == 1:
-        message_to_print += message_to_print + date + "\n" + "ERROR\n" + problems +"\n"
+        message_to_print += message_to_print + date + "\n" + "ERROR: " + problems +"\n"
     if error != 1:
-        message_to_print += message_to_print + date + "\n" + "WARNING\n" + problems +"\n"
+        message_to_print += message_to_print + date + "\n" + "WARNING: " + problems +"\n"
     print(message_to_print)
     if len(args.filename_cli) > 0:
         file = open(args.filename_cli, "a")
-        file.write(message_to_print)
+        file.write('date :'+date+'\n'+message_to_print)
+        file.close()
+if args.outverbose & error == 0:
+    print(message_to_print)
+    if len(args.filename_cli) > 0:
+        file = open(args.filename_cli, "a")
+        file.write('date :'+date+'\n'+message_to_print)
         file.close()
 sys.exit(error)
 
