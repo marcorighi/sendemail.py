@@ -118,9 +118,9 @@ if args.outverbose:
 date = str(datetime.datetime.now())
 if error>0:
     if error == 1:
-        message_to_print += message_to_print + date + "\n" + "ERROR: " + problems +"\n"
+        message_to_print += message_to_print + "\n" + "ERROR ("+ date +"): " + problems +"\n"
     if error != 1:
-        message_to_print += message_to_print + date + "\n" + "WARNING: " + problems +"\n"
+        message_to_print += message_to_print + "\n" + "WARNING ("+ date +"): " + problems +"\n"
     print(message_to_print)
     if len(args.filename_cli) > 0:
         file = open(args.filename_cli, "a")
